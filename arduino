@@ -1,0 +1,82 @@
+#include <LiquidCrystal.h>
+
+// Inicializa o display de LCD (pinos RS, E, D4, D5, D6, D7)
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+// Definindo pinos
+const int piezoPin = 8;
+const int ledGreen = 9;
+const int ledRed = 10;
+const int ledYellow = 7;
+
+// Definindo frequências das notas
+#define NOTE_E4  330
+#define NOTE_G4  392
+#define NOTE_C4  262
+#define NOTE_D4  294
+#define NOTE_F4  349
+
+// Notas da música "Jingle Bells"
+int melody[] = {
+  NOTE_E4, NOTE_E4, NOTE_E4, // "Jingle"
+  NOTE_E4, NOTE_E4, NOTE_E4, // "Bells"
+  NOTE_E4, NOTE_G4, NOTE_C4, NOTE_D4, NOTE_E4, // "Jingle all the way"
+  NOTE_F4, NOTE_F4, NOTE_F4, NOTE_F4, NOTE_F4, NOTE_E4, // "Oh what fun it is to ride"
+  NOTE_E4, NOTE_E4, NOTE_E4, NOTE_E4, NOTE_D4, NOTE_D4, NOTE_E4, NOTE_D4, NOTE_G4, // "In a one-horse open sleigh"
+};
+
+// Duração das notas (quanto maior o número, menor a duração)
+int noteDurations[] = {
+  8, 8, 4,
+  8, 8, 4,
+  8, 8, 8, 8, 4,
+  8, 8, 8, 8, 8, 8,
+  8, 8, 8, 8, 8, 8, 8, 8, 4,
+};
+
+void setup() {
+  // Configurando os pinos dos LEDs como saída
+  pinMode(ledGreen, OUTPUT);
+  pinMode(ledRed, OUTPUT);
+  pinMode(ledYellow, OUTPUT);
+
+  // Inicializando o LCD
+  lcd.begin(16, 2);
+  lcd.print("Musica:");  // Escreve "Musica:" na primeira linha
+  lcd.setCursor(0, 1);   // Move para a segunda linha
+  lcd.print("Feliz Natal!"); // Escreve "Jingle Bells"
+}
+
+void playTone(int note, int duration) {
+  // Usando a função tone() para tocar a nota no piezo
+  tone(piezoPin, note, duration);
+  delay(duration);
+  noTone(piezoPin);  // Para a nota após a duração
+}
+
+void loop() {
+  for (int thisNote = 0; thisNote < sizeof(melody) / sizeof(melody[0]); thisNote++) {
+    int noteDuration = 1000 / noteDurations[thisNote];
+
+    // Toca a nota
+    playTone(melody[thisNote], noteDuration);
+
+    // Acende o LED de acordo com o tempo da batida
+    if (thisNote % 3 == 0) {
+      digitalWrite(ledGreen, HIGH);
+      delay(noteDuration);
+      digitalWrite(ledGreen, LOW);
+    } else if (thisNote % 3 == 1) {
+      digitalWrite(ledRed, HIGH);
+      delay(noteDuration);
+      digitalWrite(ledRed, LOW);
+    } else {
+      digitalWrite(ledYellow, HIGH);
+      delay(noteDuration);
+      digitalWrite(ledYellow, LOW);
+    }
+
+    // Pausa entre as notas
+    delay(noteDuration * 0.3);
+  }
+}
