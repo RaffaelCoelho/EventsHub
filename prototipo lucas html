@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventsHub</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Tela de Cadastro -->
+    <div id="registerScreen" class="screen active">
+        <h1>Cadastro</h1>
+        <form id="registerForm">
+            <label for="registerEmail">E-mail:</label>
+            <input type="email" id="registerEmail" required>
+            <label for="registerPassword">Senha:</label>
+            <input type="password" id="registerPassword" required>
+            <button type="submit">Cadastrar</button>
+        </form>
+        <button id="goToLogin">Já tem conta? Entrar</button>
+    </div>
+
+    <!-- Tela de Login -->
+    <div id="loginScreen" class="screen">
+        <h1>Login</h1>
+        <form id="loginForm">
+            <label for="loginEmail">E-mail:</label>
+            <input type="email" id="loginEmail" required>
+            <label for="loginPassword">Senha:</label>
+            <input type="password" id="loginPassword" required>
+            <button type="submit">Entrar</button>
+        </form>
+        <button id="goToRegister">Criar conta</button>
+    </div>
+
+    <!-- Tela de Produtos -->
+    <div id="productsScreen" class="screen">
+        <h1>Produtos</h1>
+        <div id="itemsContainer">
+            <!-- Produtos serão adicionados dinamicamente -->
+        </div>
+        <button id="goToCart">Ir para o Carrinho</button>
+    </div>
+
+    <!-- Tela de Carrinho -->
+    <div id="cartScreen" class="screen">
+        <h1>Carrinho</h1>
+        <div id="cartItems">
+            <!-- Itens do carrinho aparecerão aqui -->
+        </div>
+        <form id="orderForm">
+            <label for="address">Endereço:</label>
+            <input type="text" id="address" required>
+            <label for="paymentMethod">Forma de Pagamento:</label>
+            <select id="paymentMethod" required>
+                <option value="" disabled selected>Selecione</option>
+                <option value="Cartão de Crédito">Cartão de Crédito</option>
+                <option value="Boleto">Boleto</option>
+            </select>
+            <button type="submit">Finalizar Pedido</button>
+        </form>
+        <button id="backToProducts">Voltar aos Produtos</button>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
